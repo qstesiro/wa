@@ -191,7 +191,13 @@ func (p *_Loader) Import(pkgpath string) (*types.Package, error) {
 	// main 包隐式导入 runtime
 	if pkgpath == p.prog.Manifest.MainPkg && pkgpath != "runtime" {
 		if len(pkg.Files) > 0 {
-			f, err := parser.ParseFile(nil, p.prog.Fset, "_$main$runtime.wa", `import "runtime" => _`, parser.AllErrors)
+			f, err := parser.ParseFile(
+				nil,
+				p.prog.Fset,
+				"_$main$runtime.wa",
+				`import "runtime" => _`,
+				parser.AllErrors,
+			)
 			if err != nil {
 				panic(err)
 			}

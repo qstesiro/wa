@@ -5,7 +5,8 @@ b internal/app/appbuild.CmdBuildAction
 b internal/app/apprun.CmdRunAction
 b internal/app/appbuild.BuildApp
 b internal/app/appbuild.buildWat
-b internal/loader.(*_Loader).LoadProgram
+# b internal/loader.(*_Loader).LoadProgram
+# b internal/loader.(*_Loader).Import
 b internal/wabt.Wat2Wasm
 
 g

@@ -16,7 +16,7 @@ import (
 
 type Compiler struct {
 	prog   *loader.Program
-	ssaPkg *ssa.Package
+	ssaPkg *ssa.Package // 作为CompilePkgXXX函数的参数 ???
 
 	module *wir.Module
 	tLib   *typeLib
@@ -41,7 +41,7 @@ func (p *Compiler) Compile(prog *loader.Program, mainFunc string) (output string
 		pkgnames = append(pkgnames, n)
 	}
 	sort.Strings(pkgnames)
-
+	// 保证runtime作为第一个被处理 ???
 	for i, v := range pkgnames {
 		if v == "runtime" && i != 0 {
 			pkgnames[i] = pkgnames[0]

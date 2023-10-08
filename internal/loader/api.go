@@ -13,10 +13,10 @@ import (
 // 程序对象
 // 包含程序需要的全部信息
 type Program struct {
-	Cfg      *config.Config   // 配置信息
-	Manifest *config.Manifest // 主包信息
+	Cfg      *config.Config   // 配置信息(编译参数信息)
+	Manifest *config.Manifest // 主包信息(工程信息)
 
-	Fset *token.FileSet
+	Fset *token.FileSet // 文件信息(包括导入包相关的文件)
 	Pkgs map[string]*Package
 
 	SSAProgram *ssa.Program
