@@ -64,13 +64,15 @@ func (p *Compiler) Compile(prog *loader.Program, mainFunc string) (output string
 
 	p.tLib.finish()
 
+	// wasm入口点
 	{
 		var f wir.Function
+		// init函数
 		f.InternalName, f.ExternalName = "_start", "_start"
 		n, _ := wir.GetPkgMangleName(prog.SSAMainPkg.Pkg.Path())
 		n += ".init"
 		f.Insts = append(f.Insts, wat.NewInstCall(n))
-
+		// main函数
 		if mainFunc != "" {
 			n, _ = wir.GetPkgMangleName(prog.SSAMainPkg.Pkg.Path())
 			n += "."
@@ -128,7 +130,7 @@ func (p *Compiler) CompilePkgType(ssaPkg *ssa.Package) {
 	for name := range p.ssaPkg.Members {
 		memnames = append(memnames, name)
 	}
-	sort.Strings(memnames)
+	sort.Strings(memnames) // 排序有什么特殊的作用 ???
 
 	for _, name := range memnames {
 		m := p.ssaPkg.Members[name]
@@ -143,7 +145,7 @@ func (p *Compiler) CompilePkgGlobal(ssaPkg *ssa.Package) {
 	for name := range p.ssaPkg.Members {
 		memnames = append(memnames, name)
 	}
-	sort.Strings(memnames)
+	sort.Strings(memnames) // 排序有什么特殊的作用 ???
 
 	for _, name := range memnames {
 		m := p.ssaPkg.Members[name]
@@ -158,7 +160,7 @@ func (p *Compiler) CompilePkgFunc(ssaPkg *ssa.Package) {
 	for name := range p.ssaPkg.Members {
 		memnames = append(memnames, name)
 	}
-	sort.Strings(memnames)
+	sort.Strings(memnames) // 排序有什么特殊的作用 ???
 
 	for _, name := range memnames {
 		m := p.ssaPkg.Members[name]

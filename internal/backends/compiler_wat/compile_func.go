@@ -185,6 +185,7 @@ func (g *functionGenerator) getValue(i ssa.Value) valueWrap {
 func (g *functionGenerator) genFunction(f *ssa.Function) *wir.Function {
 	g.is_init = (f.Synthetic == "package initializer")
 	var wir_fn wir.Function
+	// 函数名称与导出名
 	{
 		internal, external := wir.GetFnMangleName(f)
 		if len(f.LinkName()) > 0 {
@@ -198,7 +199,7 @@ func (g *functionGenerator) genFunction(f *ssa.Function) *wir.Function {
 			wir_fn.ExternalName = external
 		}
 	}
-
+	// 函数返回
 	rets := f.Signature.Results()
 	switch rets.Len() {
 	case 0:
@@ -212,7 +213,7 @@ func (g *functionGenerator) genFunction(f *ssa.Function) *wir.Function {
 		wir_fn.Results = append(wir_fn.Results, typ.Fields...)
 	}
 
-	for _, i := range f.FreeVars {
+	for _, i := range f.FreeVars { // ???
 		fv := valueWrap{value: wir.NewLocal(wir.GenSymbolName(i.Name()), g.tLib.compile(i.Type()))}
 		wir_fn.Params = append(wir_fn.Params, fv.value)
 		g.locals_map[i] = fv
